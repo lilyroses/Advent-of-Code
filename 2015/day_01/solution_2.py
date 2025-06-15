@@ -6,7 +6,14 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  pass
+  chars = list(lines[0])
+  lvl = {"(": 1, ")":-1}
+  floor = 0
+  for i, char in enumerate(chars, 1):
+    floor += lvl[char]
+    if floor == -1:
+      print(i)
+      break
 
 
 if __name__ == "__main__":
