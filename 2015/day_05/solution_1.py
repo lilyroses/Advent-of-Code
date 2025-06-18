@@ -1,5 +1,4 @@
 # Solution 1 - Advent of Code 2015, Day 5
-
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
   lines = [line.strip() for line in f.readlines()]
@@ -27,12 +26,11 @@ def main():
 
   total = 0
   for s in lines:
-    if (
-      has_three_vowels(s)
-      and has_double_char(s)
-      and devoid_illegal_substrs(s)
-    ):
+    if (has_three_vowels(s)
+        and has_double_char(s)
+        and devoid_illegal_substrs(s)):
       total += 1
+
   print(total)
 
 

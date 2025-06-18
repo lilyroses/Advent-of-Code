@@ -1,4 +1,4 @@
-# Solution 1 - Advent of Code 2015, Day 5
+# Solution 2 - Advent of Code 2015, Day 5
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
   lines = [line.strip() for line in f.readlines()]
@@ -18,8 +18,7 @@ def main():
 
   def has_double_char_divided(s):
     for i in range(len(s)-2):
-      substr = s[i:i+3]
-      if substr == substr[::-1]:
+      if s[i:i+3] == s[i:i+3][::-1]:
         return True
     return False
 
@@ -27,7 +26,9 @@ def main():
   for s in lines:
     if has_double_pair(s) and has_double_char_divided(s):
       total += 1
+
   print(total)
+
 
 if __name__ == "__main__":
   main()

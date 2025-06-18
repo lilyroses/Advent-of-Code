@@ -10,7 +10,7 @@ def main():
   total = 0
 
   for i, line in enumerate(lines, 1):
-    print(f"EXECUTING LINE {i}/{len(lines)}...")
+#    print(f"EXECUTING LINE {i}/{len(lines)}...")
     items = line.split()
     instr = items[:-3][-1]
     coord_1 = [int(i) for i in items[-3].split(",")]
@@ -27,6 +27,7 @@ def main():
         elif GRID[row][i] == 0 and instr != "off":
           GRID[row][i] = 1
           total += 1
+
   print(total)
 
 
