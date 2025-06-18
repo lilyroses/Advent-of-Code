@@ -2,9 +2,10 @@ import json
 import sys
 from datetime import datetime
 
+PROGRESS_DATA_FILE = "progress_data.json"
 
-with open("progress_data.json", "r") as f:
-  PD = json.load(f)
+with open(PROGRESS_DATA_FILE, "r") as f:
+  PROGRESS_DATA = json.load(f)
 
 
 current = datetime.today()
@@ -26,9 +27,9 @@ def out_of_range(parameter):
   sys.exit()
 
 def update_progress(year, day, solution_part):
-  PD[year][day] = solution_part
-  with open("progress_data.json", "w") as f:
-    json.dump(PD, f)
+  PROGRESS_DATA[year][day] = solution_part
+  with open(PROGRESS_DATA_FILE, "w") as f:
+    json.dump(PROGRESS_DATA, f)
 
 
 if len(sys.argv) != 4:

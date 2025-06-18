@@ -18,8 +18,8 @@ for year in YEARS:
   for day in DAYS:
     TOTAL_PUZZLES += 2  # each day has 2 solutions
     SOLVED_PUZZLES += PROGRESS_DATA[year][day]
-PERCENT_COMPLETE = (TOTAL_PUZZLES / SOLVED_PUZZLES) // 100
-PERCENT_COMPLETE = f"{PERCENT_COMPLETE:.01f}%"
+PERCENT_COMPLETE = (SOLVED_PUZZLES*100) / TOTAL_PUZZLES
+PERCENT_COMPLETE = f"{PERCENT_COMPLETE:.2f}%"
 
 # Calendar characters
 SPACE = " "
@@ -185,4 +185,5 @@ for year in YEARS:
   calendar += build_day_row(year, 21, 25)
   calendar += days_row_border
   calendar += blank_line
+
 print(calendar)
