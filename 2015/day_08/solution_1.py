@@ -5,7 +5,13 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  pass
+  eval_chars = 0
+  print_chars = 0
+  total_chars = 0
+  for line in lines:
+    print_chars += len(line)
+    eval_chars += len(eval(line))
+  print(print_chars - eval_chars)
 
 
 if __name__ == "__main__":
