@@ -5,8 +5,13 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  pass
-
+  original_chars = 0
+  new_chars = 0
+  for line in lines:
+    new_line = line.replace("\\", "\\\\").replace(r'"', r'\"')
+    original_chars += len(line)
+    new_chars += (len(new_line)+2)
+  print(new_chars - original_chars)
 
 if __name__ == "__main__":
   main()
