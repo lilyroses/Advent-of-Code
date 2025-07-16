@@ -1,17 +1,28 @@
 # Solution 1 - Advent of Code 2015, Day 11
 from string import ascii_lowercase
 
+
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
   lines = [line.strip() for line in f.readlines()]
 
 
 def main():
-  nums = [n for n in range(len(ascii_lowercase))]
-  char_map = dict(zip(ascii_lowercase, nums))
+  """Password must include:
+       - one increasing straight of at least 3 letters: abc, xyz
+       - no i, o, or l
+       - two different, non-overlapping pairs of letters: aa, zz
+  """
+  
+  CHAR_MAP = dict(zip(ascii_lowercase, range(0,27)))
+  NUM_MAP = dict(zip(range(0,27), ascii_lowercase))
+  ILLEGAL_CHARS = ["i", "l", "o"]
+  LEGAL_CHAR_MAP = {letter: CHAR_MAP[letter] for letter in ascii_lowercase
+                    if letter not in ILLEGAL_CHARS}
 
-  passwd = lines[0]
-  passwd_map = [char_map[char] for char in passwd]
+  # passwd = lines[0]
+  passwd  = "hxiyyaba"
+
 
   def has_char_straight(passwd):
     for i in range(len(passwd)-2):
@@ -19,12 +30,13 @@ def main():
         return True
     return False
 
+
   def devoid_illegal_char(passwd):
-    illegal_chars = ["i", "l", "o"]
-    for illegal_char in illegal_chars:
+    for illegal_char in ILLEGAL_CHARS:
       if illegal_char in passwd:
         return False
     return True
+
 
   def has_two_pairs(passwd):
     pairs = []
@@ -40,8 +52,30 @@ def main():
     return len(pairs) >= 2
 
 
-  print(has_two_pairs("andfrgjdddss"))
+  if not devoid_illegal_char(passwd):
+    # find the first occuring illegal character and then change it, and
+    # change all chars after as well
+    for i, char in enumerate(passwd):
+      if char in ILLEGAL_CHARS:
+        break
+    illegal_letter = passwd[i]
+    next_letter = NUM_MAP[CHAR_MAP[illegal_letter] + 1]
+    passwd = passwd[:i]
+    passwd += next_letter
 
+
+
+
+  return passwd
+ 
+
+
+  # return new_passwd[:n]
+
+
+
+  
+      
 
 if __name__ == "__main__":
-  main()
+  print(main())
