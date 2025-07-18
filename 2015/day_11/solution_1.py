@@ -63,19 +63,9 @@ def main():
     passwd = passwd[:i]
     passwd += next_letter
 
-
-
-
   return passwd
  
 
-
-  # return new_passwd[:n]
-
-
-
-  
-      
 
 if __name__ == "__main__":
   print(main())
