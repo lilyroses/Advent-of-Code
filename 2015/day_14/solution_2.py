@@ -8,16 +8,13 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  
   seconds = 2503
   reindeer_distances = dd(list)
-
   reindeer_points = dd(int)
 
   for line in lines:
     distance = 0
-    time = 0
-
+    time = 0 
     items = line.split()
     reindeer_name = items[0]
     flight_km = int(items[3])
@@ -46,6 +43,7 @@ def main():
 
     for reindeer, distances in reindeer_distances.items():
       current_distances.append(distances[i])
+      
     w = max(current_distances)
     for reindeer, distances in reindeer_distances.items():
       if distances[i] == w:
@@ -54,10 +52,5 @@ def main():
   print(max(reindeer_points.values()))
 
 
-
-    
-
-
 if __name__ == "__main__":
-  
   main()
