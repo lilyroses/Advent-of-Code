@@ -1,4 +1,4 @@
-# Solution 1 - Advent of Code 2015, Day 12
+# Solution 2 - Advent of Code 2015, Day 12
 import json
 
 
