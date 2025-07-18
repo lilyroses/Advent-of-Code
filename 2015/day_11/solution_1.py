@@ -1,4 +1,7 @@
 # Solution 1 - Advent of Code 2015, Day 11
+
+# !TODO: FINISH
+
 from string import ascii_lowercase
 
 

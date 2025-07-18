@@ -1,4 +1,4 @@
-# Solution 1 - Advent of Code 2022, Day 10
+# Solution 2 - Advent of Code 2022, Day 10
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
