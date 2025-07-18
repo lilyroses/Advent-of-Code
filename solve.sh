@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# commandline shortcut to open solution file for AoC puzzle.
+
 solve() {
   year=$1
   day=$(printf "%02d" "$2")
