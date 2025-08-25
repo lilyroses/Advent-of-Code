@@ -9,11 +9,23 @@ def main():
   row = int(inpt[-3][:-1])
   col = int(inpt[-1][:-1])
 
+  GRID_FILE = "grid.txt"
+  with open(GRID_FILE, "r") as f:
+    grid_lines = [line.strip() for line in f.readlines()]
+  base_grid = [[int(n) for n in line.split()]
+                for line in grid_lines]
+
+#  for row in base_grid:
+#    print(row)
+
+#  print(base_grid[5][5])
+
   def get_next_num(pnum):
-    
+    pass
+
   def update_grid(grid, prow, pcol):
     pnum = grid[prow][pcol]
-    nnum = pnum + 1
+    nnum = (pnum * 5) - 1
 
     # if prev row was 0, add a new row
     if prow == 0:
@@ -26,13 +38,30 @@ def main():
       grid[nrow].append(nnum)
     return grid, nrow, ncol
 
-  grid = [[1]]
-  row, col = 0, 0
-  while len(grid) < 10:
-    grid, row, col = update_grid(grid, row, col)
+  max_row = 3010
+  max_col = 3019
+  x = 20151125
+  y = 252533
+  z = 33554393
 
-  for row in grid:
-    print(row)
+  grid = [[1]]
+
+  row, col = 0, 0
+  i = 0
+  while True:
+    i += 1
+    grid, row, col = update_grid(grid, row, col)
+    i += 1
+    if i % 100 == 0 and i < max_row-1:
+      print(len(grid))
+    elif len(grid) == max_row:
+#      if len(grid[max_row]) >= max_col:
+#        answer = grid[max_row-1][max_col-1]
+#        answer = len(grid[max_row-1])
+        break
+
+#  print(answer)
+  print(grid[max_row-1])
 
 
 if __name__ == "__main__":
