@@ -25,7 +25,8 @@ def main():
 
   def update_grid(grid, prow, pcol):
     pnum = grid[prow][pcol]
-    nnum = (pnum * 5) - 1
+#    nnum = (pnum * 5) - 1
+    nnum = pnum + 5
 
     # if prev row was 0, add a new row
     if prow == 0:
@@ -47,21 +48,17 @@ def main():
   grid = [[1]]
 
   row, col = 0, 0
-  i = 0
   while True:
-    i += 1
     grid, row, col = update_grid(grid, row, col)
-    i += 1
-    if i % 100 == 0 and i < max_row-1:
-      print(len(grid))
-    elif len(grid) == max_row:
+    if len(grid) == 6:
 #      if len(grid[max_row]) >= max_col:
 #        answer = grid[max_row-1][max_col-1]
 #        answer = len(grid[max_row-1])
         break
 
 #  print(answer)
-  print(grid[max_row-1])
+  for row in grid:
+    print(row)
 
 
 if __name__ == "__main__":

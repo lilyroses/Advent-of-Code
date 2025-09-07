@@ -47,7 +47,10 @@ def main():
 #          all_new_seqs.append(new_seq)
       all_new_seqs = all_new_seqs.union(new_seqs)
 
-  print(len(all_new_seqs))
+#  print(len(all_new_seqs))
+  for s in all_new_seqs:
+    if len(s) == 1:
+      print(s)
 
 
 if __name__ == "__main__":
