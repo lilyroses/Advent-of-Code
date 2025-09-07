@@ -5,10 +5,12 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  inpt = lines[0].split()
-  row = int(inpt[-3][:-1])
-  col = int(inpt[-1][:-1])
 
+  inpt = lines[0].split()
+  max_row = int(inpt[-3][:-1])
+  max_col = int(inpt[-1][:-1])
+
+<<<<<<< HEAD
   GRID_FILE = "grid.txt"
   with open(GRID_FILE, "r") as f:
     grid_lines = [line.strip() for line in f.readlines()]
@@ -41,12 +43,16 @@ def main():
 
   max_row = 3010
   max_col = 3019
+=======
+>>>>>>> f00759a2d75d3b81fdfa1f74a5ec08fb52ad4d2b
   x = 20151125
   y = 252533
   z = 33554393
 
-  grid = [[1]]
+  row = 1
+  col = 1
 
+<<<<<<< HEAD
   row, col = 0, 0
   while True:
     grid, row, col = update_grid(grid, row, col)
@@ -59,6 +65,24 @@ def main():
 #  print(answer)
   for row in grid:
     print(row)
+=======
+  while True:
+
+    if row == 1:
+      row = col + 1
+      col = 1
+    else:
+      row -= 1
+      col += 1
+    x = (x*y) % z
+
+    if row % 1000 == 0:
+      print(f"row={row}, col={col}")
+
+    if row == max_row and col == max_col:
+      print("\nFOUND:", x)
+      break
+>>>>>>> f00759a2d75d3b81fdfa1f74a5ec08fb52ad4d2b
 
 
 if __name__ == "__main__":
