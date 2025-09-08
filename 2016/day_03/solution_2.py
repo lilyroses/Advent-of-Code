@@ -6,7 +6,20 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  pass
+  arr = [[int(n) for n in line.lstrip().split()] for line in lines]
+
+  num_rows = len(arr)
+  num_cols = len(arr[0])
+  for row in arr[1:]:
+    if len(row) != num_cols:
+      print("Error")
+      return False
+
+  new_arr = [[] for i in range(num_cols)]
+  for i in range(num_rows):
+    for j in range(num_cols):
+      num = arr[i][j]
+      new_arr[j].append(num)
 
 
 if __name__ == "__main__":
