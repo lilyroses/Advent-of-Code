@@ -6,6 +6,7 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
+
   arr = [[int(n) for n in line.lstrip().split()] for line in lines]
 
   num_rows = len(arr)
@@ -20,6 +21,16 @@ def main():
     for j in range(num_cols):
       num = arr[i][j]
       new_arr[j].append(num)
+
+  total = 0
+
+  for row in new_arr:
+    for i in range(0, len(row),3):
+      a, b, c = row[i:i+3]
+      if (a+b > c) and (a+c > b) and (b+c > a):
+        total += 1
+
+  print(total)
 
 
 if __name__ == "__main__":
