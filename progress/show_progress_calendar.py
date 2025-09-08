@@ -10,15 +10,22 @@ with open(PROGRESS_FILE, "r") as f:
   PROGRESS_DATA = json.load(f)
 
 YEARS = PROGRESS_DATA.keys()
-DAYS = [str(i) for i in range(1,26)]
+DAY_START = 1
+DAY_END = 25
+DAYS = [str(i) for i in range(DAY_START, DAY_END+1)]
 
-TOTAL_PUZZLES = 0
-SOLVED_PUZZLES = 0
+PUZZLES_IN_YEAR = len(DAYS) * 2
+TOTAL_PUZZLES = len(YEARS) * PUZZLES_IN_YEAR  # each day has 2 solutions
+SOLVED_PUZZLES_BY_YEAR = {}
+TOTAL_SOLVED_PUZZLES = 0
 for year in YEARS:
+  solved = 0
   for day in DAYS:
-    TOTAL_PUZZLES += 2  # each day has 2 solutions
-    SOLVED_PUZZLES += PROGRESS_DATA[year][day]
-PERCENT_COMPLETE = (SOLVED_PUZZLES*100) / TOTAL_PUZZLES
+    solved += PROGRESS_DATA[year][day]
+  SOLVED_PUZZLES_BY_YEAR[year] = solved
+  TOTAL_SOLVED_PUZZLES += solved
+
+PERCENT_COMPLETE = (TOTAL_SOLVED_PUZZLES * 100) / TOTAL_PUZZLES
 PERCENT_COMPLETE = f"{PERCENT_COMPLETE:.2f}%"
 
 # Calendar characters
@@ -85,7 +92,7 @@ def build_calendar_title_banner():
   title_2 = PIPE + title_2 + PIPE
   title_2 = f"{title_2:^{SCREEN_WIDTH}}"
 
-  title_3 = f"total: {SOLVED_PUZZLES}/{TOTAL_PUZZLES} ({PERCENT_COMPLETE})"
+  title_3 = f"total: {TOTAL_SOLVED_PUZZLES}/{TOTAL_PUZZLES} ({PERCENT_COMPLETE})"
   title_3 = f"{title_3:^{calendar_width-2}}"
   title_3 = PIPE + title_3 + PIPE
   title_3 = f"{title_3:^{SCREEN_WIDTH}}"
@@ -101,6 +108,14 @@ def build_year_title_banner(year):
   year_title_banner = f"{year:^{calendar_width-2}}"
   year_title_banner = PIPE + year_title_banner + PIPE
   year_title_banner = f"{year_title_banner:^{SCREEN_WIDTH}}"
+  year_puzzles_completed = SOLVED_PUZZLES_BY_YEAR[year]
+  year_progress_percent = (year_puzzles_completed * 100) / PUZZLES_IN_YEAR
+  year_progress_line = f"total: {year_puzzles_completed}/{PUZZLES_IN_YEAR} ({year_progress_percent:.2f}%)"
+  year_progress_line = f"{year_progress_line:^{calendar_width-2}}"
+  year_progress_line = PIPE + year_progress_line + PIPE
+  year_progress_line = f"{year_progress_line:^{SCREEN_WIDTH}}"
+  year_title_banner += build_empty_row()
+  year_title_banner += f"\n{year_progress_line}"
   return year_title_banner
 
 

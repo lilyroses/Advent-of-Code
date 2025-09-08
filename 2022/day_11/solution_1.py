@@ -6,7 +6,18 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  pass
+  ms = {}
+
+  idxs = []
+  for i, line in enumerate(lines):
+    if "M" in line:
+      idxs.append(i)
+
+      num = int(line.split()[-1][:-1])
+      ms[num] = {}
+      ms[num]["items"] = []
+
+  
 
 
 if __name__ == "__main__":
