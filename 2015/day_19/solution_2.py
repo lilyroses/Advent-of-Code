@@ -38,9 +38,9 @@ def main():
 
     return new_seqs
 
-  old_substr = "e"
-  new_substrs = replacements[old_substr]
-  
+  s = "e"
+
+  print(replacements[s])
 
 
 if __name__ == "__main__":
