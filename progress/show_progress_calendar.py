@@ -172,8 +172,6 @@ def build_day_row(year, day_start, day_end):
 {days_blank_row:^{SCREEN_WIDTH}}"""
   return day_row
 
-
-
 calendar = ""
 blank_line = build_blank_line()
 calendar_border = build_horiz_border()

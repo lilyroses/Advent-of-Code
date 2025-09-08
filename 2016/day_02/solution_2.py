@@ -13,14 +13,23 @@ def main():
     [0, 0, 'D', 0, 0]
   ]
 
+  col = 0
+  row = 2
   max_row = 4
   max_col = 4
-  row = 2
-  col = 0
 
   nums = ""
 
   for line in lines:
+    instrs = list(line)
+    for instr in instrs:
+
+      if instr == "R":
+        pcol = min(col+1, max_col)
+        if keypad[row][pcol] != 0:
+          col = pcol
+
+      elif instr == "L":
     for char in line:
 
       if char == "R":
@@ -33,10 +42,22 @@ def main():
         if keypad[row][pcol] != 0:
           col = pcol
 
+      elif instr == "U":
+        prow = max(0, row-1)
+        if keypad[prow][col] != 0:
+          row = prow
+
+
+      elif instr == "D":
       elif char == "D":
         prow = min(max_row, row+1)
         if keypad[prow][col] != 0:
           row = prow
+
+    num = keypad[row][col]
+    nums += str(num)
+
+  print(nums)
 
       elif char == "U":
         prow = max(0, row-1)

@@ -6,7 +6,7 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  
+
   seconds = 2503
   reindeer_distances = {}
 
