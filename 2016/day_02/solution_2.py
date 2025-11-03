@@ -30,14 +30,6 @@ def main():
           col = pcol
 
       elif instr == "L":
-    for char in line:
-
-      if char == "R":
-        pcol = min(max_col, col+1)
-        if keypad[row][pcol] != 0:
-           col = pcol
-
-      elif char == "L":
         pcol = max(0, col-1)
         if keypad[row][pcol] != 0:
           col = pcol
@@ -47,24 +39,13 @@ def main():
         if keypad[prow][col] != 0:
           row = prow
 
-
       elif instr == "D":
-      elif char == "D":
         prow = min(max_row, row+1)
         if keypad[prow][col] != 0:
           row = prow
 
     num = keypad[row][col]
     nums += str(num)
-
-  print(nums)
-
-      elif char == "U":
-        prow = max(0, row-1)
-        if keypad[prow][col] != 0:
-          row = prow
-
-    nums += str(keypad[row][col])
 
   print(nums)
 

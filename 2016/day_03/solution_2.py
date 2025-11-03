@@ -8,18 +8,18 @@ with open(INPUT_FILE, "r") as f:
 def main():
   arr = [[int(n) for n in line.lstrip().split()] for line in lines]
 
-  num_rows = len(arr)
-  num_cols = len(arr[0])
-  for row in arr[1:]:
-    if len(row) != num_cols:
-      print("Error")
-      return False
+  total = 0
+  for i in range(0, len(arr), len(arr[0])):
+    a,b,c = arr[i:i+len(arr[0])]
+    for j in range(len(arr[0])):
+      if (
+           ((a[j] + b[j]) > c[j])
+           and ((a[j] + c[j]) > b[j])
+           and ((b[j]+c[j]) > a[j])
+      ):
+        total += 1
 
-  new_arr = [[] for i in range(num_cols)]
-  for i in range(num_rows):
-    for j in range(num_cols):
-      num = arr[i][j]
-      new_arr[j].append(num)
+  print(total)
 
 
 if __name__ == "__main__":

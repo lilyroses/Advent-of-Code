@@ -30,23 +30,9 @@ def main():
         row = max(0, row-1)
       elif instr == "D":
         row = min(max_row, row+1)
-#      print(keypad[row][col])
 
     num = keypad[row][col]
     nums += str(num)
-
-  print(nums)
-
-    for char in line:
-      if char == "R":
-        col = min(max_col, col+1)
-      elif char == "L":
-        col = max(0, col-1)
-      elif char == "D":
-        row = min(max_row, row+1)
-      elif char == "U":
-        row = max(0, row-1)
-    nums += str(keypad[row][col])
 
   print(nums)
 
