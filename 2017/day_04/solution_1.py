@@ -2,12 +2,20 @@
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
-  lines = [line.strip() for line in f.readlines()]
+    lines = [line.strip() for line in f.readlines()]
 
 
 def main():
-  pass
+    total = 0
+    for line in lines:
+        passwords = line.split()
+        no_repeats = set(passwords)
+        print(passwords, no_repeats)
+        if len(passwords) == len(no_repeats):
+            total += 1
+
+    print(total)
 
 
 if __name__ == "__main__":
-  main()
+    main()

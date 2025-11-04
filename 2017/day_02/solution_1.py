@@ -2,12 +2,21 @@
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
-  lines = [line.strip() for line in f.readlines()]
+    lines = [line.strip() for line in f.readlines()]
 
 
 def main():
-  pass
+    spreadsheet = []
+    for line in lines:
+        row = [int(num) for num in line.split()]
+        spreadsheet.append(row)
+
+    total = 0
+    for row in spreadsheet:
+        total += max(row) - min(row)
+
+    print(total)
 
 
 if __name__ == "__main__":
-  main()
+    main()

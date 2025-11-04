@@ -36,6 +36,10 @@ def main():
 
   print(nums)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c6569d7ae690c569d4242eac22cc72692afad02a
 
 if __name__ == "__main__":
   main()
