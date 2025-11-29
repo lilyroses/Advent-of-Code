@@ -6,7 +6,11 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-  pass
+  f = 0
+  for line in lines:
+    i = int(line)
+    f += i
+  print(f)
 
 
 if __name__ == "__main__":
