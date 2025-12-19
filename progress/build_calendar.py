@@ -2,52 +2,42 @@
 import os
 import sys
 from datetime import datetime
+from event_info import EVENT_YEAR_DAYS, YEARS, PUZZLES_PER_DAY
 
 
-CORMER	= "+"
+# EVENT INFO
+current_month = datetime.today().month
+current_year = datetime.today().year
+if current_month == 12 and current_year not in EVENT_YEAR_DAYS:
+  print("\nError: Please update `event_info.py` to reflect the current year's event info.\n")
+  sys.exit()
+
+# CALENDAR SYMBOLS AND SIZES
+CORNER	= "+"
 DASH	= "-"
 PIPE	= "|"
 SPACE	= " "
 STAR 	= "*"
 
-# CALENDAR DATES
-current = datetime.today()
-
-DAYS_PER_ROW	= 5
-ROWS_PER_MONTH	= 5
-DAYS_PER_MONTH	= DAYS_PER_ROW * ROWS_PER_MONTH
-DAYS = list(range(1, DAYS_PER_MONTH+1))
-
-YEAR_START	= 2016
-YEAR_END 	= current.year
-if current.month != 12:
-  YEAR_END -= 1
-YEARS = list(range(YEAR_START, YEAR_END+1))
-
-
-# TERMINAL INFO
+# SCREEN WIDTH, CALENDAR DAY AND WEEK WIDTHS
 SCREEN_WIDTH = os.get_terminal_size()[0]
-
-MIN_DAY_WIDTH = 5 #includes len of pipe char
-MIN_CAL_WIDTH = (MIN_DAY_WIDTH * DAYS_PER_ROW) + 1  # +1 to account for final pipe char
-
+DAYS_PER_ROW  = 5
+MIN_DAY_WIDTH = 4 # does not include pipe chars
 
 
-def get_day_width(DAYS_PER_ROW, SCREEN_WIDTH):
-  if SCREEN_WIDTH < MIN_CAL_WIDTH:
+def get_day_width(SCREEN_WIDTH, MIN_DAY_WIDTH=4, DAYS_PER_ROW=5):
+  MIN_CALENDAR_WIDTH = (MIN_DAY_WIDTH * DAYS_PER_ROW) + (len(PIPE) * DAYS_PER_ROW) + len(PIPE) # final len(PIPE) is to account for final pipe char that closes calendar row
+
+  if SCREEN_WIDTH < MIN_CALENDAR_WIDTH:
     print("Error: screen width too small to display calendar.")
     sys.exit()
 
-  if SCREEN_WIDTH >= MIN_CAL_WIDTH:
-    extra_spaces = SCREEN_WIDTH - MIN_CAL_WIDTH
+  if SCREEN_WIDTH >= MIN_CALENDAR_WIDTH:
+    extra_spaces = SCREEN_WIDTH - MIN_CALENDAR_WIDTH
     extra_day_spaces = extra_spaces // DAYS_PER_ROW
     day_width = MIN_DAY_WIDTH + extra_day_spaces
 
   return day_width
 
 
-def get_calendar_width(DAYS_PER_ROW):
-  day_width = get_day_width(DWYS_PER
-calendar_width = (DAYS_PER_ROW * day_width) + 1  # +1 is for final PIPE char
-
-
+day_width = get_day_width(DAYS_PER_ROW, SCREEN_WIDTH

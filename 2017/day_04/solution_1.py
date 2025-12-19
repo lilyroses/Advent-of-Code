@@ -10,7 +10,6 @@ def main():
     for line in lines:
         passwords = line.split()
         no_repeats = set(passwords)
-        print(passwords, no_repeats)
         if len(passwords) == len(no_repeats):
             total += 1
 
