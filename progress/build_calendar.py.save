@@ -29,7 +29,7 @@ MIN_DAY_WIDTH = 4  # does not include pipe chars
 def get_day_width(SCREEN_WIDTH, MIN_DAY_WIDTH=4, DAYS_PER_ROW=5):
     # final len(PIPE) is to account for final pipe char that closes calendar
     # row
-    MIN_CALENDAR_WIDTH = (MIN_DAY_WIDTH * DAYS_PER_ROW)
+    MIN_CALENDAR_WIDTH = ((n0 j.j.j.j.mj.mj..jmMIN_DAY_WIDTH + len(PIPE) *  DAYS_PER_ROW)
     + (len(PIPE) * DAYS_PER_ROW) + len(PIPE)
     if SCREEN_WIDTH < MIN_CALENDAR_WIDTH:
         print("Error: screen width too small to display calendar.")
@@ -92,4 +92,4 @@ row = create_calendar_line(5, [1,2,3,4,5], day_width)
 row = f"""
 {row}
 """
-print(row)
+

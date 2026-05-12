@@ -3,6 +3,7 @@ from collections import defaultdict as dd
 
 
 INPUT_FILE = "input.txt"
+#INPUT_FILE = "input2.txt"
 with open(INPUT_FILE, "r") as f:
   lines = [line.strip() for line in f.readlines()]
 
@@ -17,7 +18,7 @@ def main():
     i = banks.index(max(banks))
     alloc = banks[i]
     banks[i] = 0
-    foar j in range(alloc):
+    for j in range(alloc):
       i += 1
       i = i % len(banks)
       banks[i] += 1
@@ -34,7 +35,9 @@ def main():
     else:
       print(f"FOUND INFINITE LOOP AFTER {steps} STEPS")
       i = configs.index(config)
-      
+      num_steps = steps - (i+1)
+      print(f"Num steps: {num_steps}")
+      return
 
 
 if __name__ == "__main__":
