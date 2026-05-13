@@ -2,16 +2,13 @@
 import os
 import sys
 from datetime import datetime
-from event_info import YEARS
 
 
 # EVENT INFO
-current_month = datetime.today().month
-current_year = datetime.today().year
-if current_month == 12 and current_year not in YEARS:
-    print("\nError: Please update `event_info.py` to reflect the current \
-          year's event info.\n")
-    sys.exit()
+current = datetime.today()
+YEAR_START = 2015
+YEAR_END = current.year
+
 
 # CALENDAR SYMBOLS AND SIZES
 CORNER = "+"

@@ -18,6 +18,16 @@ DAY_START = 1
 DAY_END = 25
 DAYS = [str(i) for i in range(DAY_START, DAY_END+1)]
 
+for year in YEARS:
+  if year not in PROGRESS_DATA.keys():
+    PROGRESS_DATA[year] = {day: {1: 0, 2: 0} for day in DAYS}
+  else:
+    for day in DAYS:
+      if day not in PROGRESS_DATA[year].keys():
+
+
+      if PROGRESS_DATA[year][day]
+
 PUZZLES_IN_YEAR = len(DAYS) * 2
 TOTAL_PUZZLES = len(YEARS) * PUZZLES_IN_YEAR  # each day has 2 solutions
 SOLVED_PUZZLES_BY_YEAR = {}
