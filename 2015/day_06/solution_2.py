@@ -1,7 +1,7 @@
 # Solution 2 - Advent of Code 2015, Day 6
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
-    lines = [line.strip() for line in f.readlines()]
+  lines = [line.strip() for line in f.readlines()]
 
 
 def main():
@@ -22,16 +22,16 @@ def main():
     for row in range(start_row, end_row+1):
       for i in range(start_idx, end_idx+1):
         if instr == "on":
-            GRID[row][i] += 1
-            total += 1
+          GRID[row][i] += 1
+          total += 1
         elif instr == "off":
           if GRID[row][i] > 0:
-              GRID[row][i] -= 1
-              total -= 1
+            GRID[row][i] -= 1
+            total -= 1
         else:
-            GRID[row][i] += 2
-                total += 2
- 
+          GRID[row][i] += 2
+          total += 2
+
   print(total)
 
 
