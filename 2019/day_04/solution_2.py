@@ -1,4 +1,6 @@
 # Solution 2 - Advent of Code 2019, Day 4
+from collections import defaultdict
+
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
@@ -8,26 +10,20 @@ with open(INPUT_FILE, "r") as f:
 def main():
     x, y = [int(v) for v in lines[0].split('-')]
 
-
     def is_valid(n):
-        has_pair = False
         pd = n%10
         n = n//10
-        ds = [pd]
+        ds_map = defaultdict(int)
+        ds_map[pd] += 1
 
-        i = 0
-        while n > 0:
+        while n != 0:
             d = n%10
-            i += 1
+            if d > pd:
+                return False
             n = n//10
-            if d == pd:
-                has_pair = True
-                i += 1
-            if d <= pd:
-                ds.append(d)
-                pd = d
-            else:
-        return has_pair
+            ds_map[d] += 1
+            pd = d
+        return 2 in ds_map.values()
 
 
     t = 0
@@ -37,5 +33,5 @@ def main():
     print(t)
 
 
-if __name__ == "__main__": main()
-    return main()
+if __name__ == "__main__":
+    main()
