@@ -1,4 +1,4 @@
-# Solution 2 - Advent of Code 2019, Day 4
+# Solution 1 - Advent of Code 2019, Day 4
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
@@ -15,27 +15,23 @@ def main():
         n = n//10
         ds = [pd]
 
-        i = 0
-        while n > 0:
+        while n != 0:
             d = n%10
-            i += 1
             n = n//10
             if d == pd:
                 has_pair = True
-                i += 1
             if d <= pd:
                 ds.append(d)
-                pd = d
             else:
+                return False
         return has_pair
 
 
-    t = 0
+    nums = []
     for i in range(x, y+1):
         if is_valid(i):
-            t += 1
-    print(t)
+            nums.append(i)
+    print(nums)
 
 
 if __name__ == "__main__": main()
-    return main()

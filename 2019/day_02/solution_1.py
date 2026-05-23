@@ -6,69 +6,40 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-#    lines = ["1,0,0,0,99"]
-#    lines = ["2,3,0,3,99"]
-#    lines = ["2,4,4,5,99,0"]
-#    lines = ["1,1,1,4,99,5,6,0,99"]
-    vals = [int(n) for n in lines[0].split(',')]
 
-    i = 0
+    def run(n, v):
+        m = [int(n) for n in lines[0].split(',')]
+        m[1] = n
+        m[2] = v
 
-    vals[1] = 12
-    vals[2] = 2
+        addr = 0
+        while True:
+            op = m[addr]
+            if op == 99:
+                return m[0]
 
-    print(f"\ni: {i}")
-    print(f"\t- vals: {vals}")
 
-    while True:
+            v1 = m[m[addr+1]]
+            v2 = m[m[addr+2]]
+            res_idx = m[addr+3]
 
-#        if i >= len(vals)-4:
-#            print(f"\nEXIT\n")
-#            print(f"\nvals[0]: {vals[0]}\n")
-#            return
+            if op == 1:
+                res = v1 + v2
+            elif op == 2:
+                res = v1 * v2
+            else:
+                print(f"Error: unknown opcode '{op}'")
+                return
 
-        opcode = vals[i]
+            m[res_idx] = res
+            addr += 4
+            if addr+3 >= len(m):
+                return m[0]
 
-        if opcode == 99:
-            print(f"\nEXIT CODE {opcode}\n")
-            print(f"\nvals[0]: {vals[0]}\n")
-            return
-
-            return
-
-        v1_idx = vals[i+1]
-        v2_idx = vals[i+2]
-        res_idx = vals[i+3]
-
-        v1 = vals[v1_idx]
-        v2 = vals[v2_idx]
-
-        if opcode == 1:
-            s = '+'
-            res = v1 + v2
-
-        elif opcode == 2:
-            s = '*'
-            res = v1 * v2
-
-        else:
-            print(f"Error: unknown opcode '{opcode}'")
-            return
-
-        print(f"\nOPCODE: {opcode} [{s}]")
-        print(f"\t- v1:   {v1} [idx: {v1_idx}]")
-        print(f"\t- v2:   {v2} [idx: {v2_idx}]")
-        print(f"\t- res:  {res} [{v1} {s} {v2}] -> idx [{res_idx}]")
-
-        vals[res_idx] = res
-        print(f"\t- vals: {vals}")
-
-        i += 4
-
-        if i+3 >= len(vals):
-            print(f"\nEXIT CODE {opcode}\n")
-            print(f"\nvals[0]: {vals[0]}\n")
-            return
+    n = 12
+    v = 2
+    res = run(n, v)
+    print(res)
 
 
 if __name__ == "__main__":

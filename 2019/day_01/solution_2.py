@@ -2,12 +2,26 @@
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
-  lines = [line.strip() for line in f.readlines()]
+    lines = [line.strip() for line in f.readlines()]
 
 
 def main():
-  pass
+    vals = [int(n) for n in lines]
+
+    def eval(v):
+        t = 0
+        while True:
+            x = v // 3 - 2
+            if x <= 0:
+                return t
+            t += x
+            v = x
+
+    totals = []
+    for val in vals:
+        totals.append(eval(val))
+    print(sum(totals))
 
 
 if __name__ == "__main__":
-  main()
+    main()

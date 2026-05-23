@@ -8,30 +8,37 @@ with open(INPUT_FILE, "r") as f:
 def main():
     line_instrs = [line.split(',') for line in lines]
 
+
     def get_pts(line_instr):
+        x, y = 0, 0
+
         pts = []
-        x, y = 0,0
         for instr in line_instr:
             d = instr[0]
             val = int(instr[1:])
 
             if d == 'R':
-                for dx in range(x+1, x+1+val):
-                    pts.append((dx, y))
+                for dx in range(x+xi, x+xi+val*xi, xi):
+                    for dy in range(y+yi, y+yi+val*yi, yi):
+                        pts.append((dx, y))
                 x = dx
+                y = dy
 
             elif d == 'U':
-                for dy in range(y+1, y+1+val):
+                xi, yi = (0, 1)
+                for dy in range(y+yi, y+yi+val*yi, yi):
                         pts.append((x, dy))
                 y = dy
 
             elif d == 'L':
-                for dx in range(x-1, x-1-val, -1):
+                xi, yi = (-1, 0)
+                for dx in range(x+xi,, x+xi+val*xi, xi):
                     pts.append((dx, y))
                 x = dx
 
             elif d == 'D':
-                for dy in range(y-1, y-1-val, -1):
+                xi, yi = (0, -1)
+                for dy in range(y+yi, y+yi+val*yi, yi):
                     pts.append((x, dy))
                 y = dy
 

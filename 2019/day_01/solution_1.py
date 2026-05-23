@@ -2,12 +2,14 @@
 
 INPUT_FILE = "input.txt"
 with open(INPUT_FILE, "r") as f:
-  lines = [line.strip() for line in f.readlines()]
+    lines = [line.strip() for line in f.readlines()]
 
 
 def main():
-  pass
+    vals = [int(n) for n in lines]
+    fuel_vals = sum([(v//3) - 2 for v in vals])
+    print(fuel_vals)
 
 
 if __name__ == "__main__":
-  main()
+    main()
