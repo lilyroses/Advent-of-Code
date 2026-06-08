@@ -5,6 +5,7 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
+    
     def has_double_pair(s):
         pairs = {}
         for i in range(len(s)-1):

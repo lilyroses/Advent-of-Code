@@ -1,59 +1,53 @@
 import json
 import sys
-from datetime import datetime
 
 
-PROGRESS_DATA_FILE = "progress_data.json"
-with open(PROGRESS_DATA_FILE, "r") as f:
-  PROGRESS_DATA = json.load(f)
+def update_progress(year, day, score):
 
+    VALID_SCORES = (0,1,2)
+    if score not in VALID_SCORES:
+        print(f"\nError: Invalid score [{score}]. Valid score values are:\n{VALID_SCORES}\n")
+        sys.exit()
 
-current_year = datetime.today().year
+    PROGRESS_DATA_FILE = "progress_data.json"
+    with open(PROGRESS_DATA_FILE, "r") as f:
+        PROGRESS_DATA = json.load(f)
+    
+    YEAR_KEYS = list(PROGRESS_DATA.keys())
+    if year not in YEAR_KEYS:
+        print(f"\nError: Invalid year. Valid year keys are:\n{YEAR_KEYS}\n")
+        sys.exit()
 
+    DAY_KEYS = list(PROGRESS_DATA[year].keys())
+    if day not in DAY_KEYS:
+        print(f"\nError: Invalid day for year {year}. Valid day keys are:\n{DAY_KEYS}\n")
+        sys.exit()
 
-def update_progress(year, day, solution_part):
-    """
-
-    """
-    if year not in PROGRESS_DATA:
-        PROGRESS_DATA[year] = {}
-
-    PROGRESS_DATA[year][day] = solution_part
+    cur_score = PROGRESS_DATA[year][day]
+    if cur_score == score:
+        sys.exit()
+    if cur_score > score:
+        print(f"\nScore for {year}, Day {day} is already listed as [{cur_score}].")
+        while True:
+            revert = input("Revert score? (y/n): ")
+            if revert.lower() == 'n':
+                print("\nOperation cancelled.\nExiting...\n")
+                sys.exit()
+            elif revert.lower() == 'y':
+                break
+    
+    PROGRESS_DATA[year][day] = score
     with open(PROGRESS_DATA_FILE, "w") as f:
         json.dump(PROGRESS_DATA, f)
 
-if len(sys.argv) != 4:
-    print(f"\nError: Invalid number of parameters (required: year, day, solution_part)")
+    print(f"\nSuccessfully updated score for {year}, Day {day}: [{score}]\n")
     sys.exit()
 
 
-year, day, solution_part = sys.argv[1:]
+if __name__ == "__main__":
+    args = sys.argv[1:]
 
+    year, day, score = sys.argv[1:]
+    score = int(score)
+    update_progress(year, day, score)
 
-try:
-    year = int(year)
-except ValueError:
-    print("Error: year must be integer value")
-    sys.exit()
-if year not in range(2015, current_year+1):
-    print(f"\nError: year out of range.")
-    sys.exit()
-
-
-try:
-    day = int(day)
-except ValueError:
-    print("Error: day must be integer value.")
-if day not in range(1, 26):
-    out_of_range("day")
-
-
-try:
-    solution_part = int(solution_part)
-except ValueError:
-    invalid_type("solution_part")
-if solution_part not in [0,1,2]:
-    out_of_range("solution_part")
-
-
-update_progress(str(year), str(day), solution_part)
