@@ -12,8 +12,10 @@ def main():
       - Include a substring of 3 or more consecutive, ascending letters:
         - abc, xyz
       - Have none of the following characters:
-        - i, o, l (lowercase L)"""
+        - i, o, l (lowercase L)
+    """
   
+
     CHAR_MAP = dict(zip(ascii_lowercase, range(0,27)))
     NUM_MAP = dict(zip(range(0,27), ascii_lowercase))
     ILLEGAL_CHARS = ["i", "l", "o"]
@@ -21,6 +23,7 @@ def main():
                       if letter not in ILLEGAL_CHARS}
 
     passwd = lines[0]
+
 
     def has_illegal_char(s):
         for char in s:
@@ -35,8 +38,6 @@ def main():
             char_val = CHAR_MAP[substr[0]]
             if char_val+1 == substr[1] and char_val + 2 == substr[2]:
                 return True
-            
-        
 
 
     def has_char_straight(passwd):
