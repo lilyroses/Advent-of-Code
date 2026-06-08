@@ -287,7 +287,6 @@ def get_progress_bar(stars_earned, total_stars):
     str_percent_complete = str(percent_complete)
     fmt_str_percent_complete = str_percent_complete[:str_percent_complete.index('.') + 2]
     # the stars that indicate how full the progress bar is
-    # num_stars = round((PROGRESS_BAR_WIDTH * percent_complete) / 100)
     stars_progress_bar = round((percent_complete // 2)) * STAR
     # the dots that indicate the empty portion of the progress bar
     dots_progress_bar = (PROGRESS_BAR_WIDTH - len(stars_progress_bar)) * DOT
