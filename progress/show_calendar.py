@@ -19,7 +19,7 @@ def get_total_puzzles_all():
     return total_puzzles
 
 
-def get_total_puzzles_completed():
+def get_total_stars_earned():
     """Returns the sum total of stars earned for all Advent of Code
     events."""
     total_completed_puzzles = sum(score for _, days in PROGRESS_DATA.items()
@@ -35,7 +35,7 @@ def get_total_puzzles_year(year):
     return total_puzzles
 
 
-def get_puzzles_completed_year(year):
+def get_stars_earned_year(year):
     """Returns the total number of stars that have been earned for this
     year's Advent of Code event."""
     total_completed_puzzles = sum(score for _, score in PROGRESS_DATA[year].items())
@@ -114,21 +114,6 @@ def get_empty_row():
     return empty_row
 
 
-def get_week_empty_row():
-    """Gets an empty row for a calendar week. Produces a divider for
-    each day and the requisite number of spaces between each to create
-    a week of days that are of size DAY_SQUARE_WIDTH.
-    
-    Example:
-    |          |          |          |          |          |
-    """
-    week_empty_row = ""
-    for i in range(DAYS_PER_ROW):
-        week_empty_row += DIV + (SPACE * DAY_SQUARE_WIDTH)
-    week_empty_row += DIV
-    return week_empty_row
-
-
 def get_underline(text):
     """Get a line of underline characters that is centered underneath
     some text (the function argument). Does not include left/right
@@ -157,6 +142,21 @@ def fmt_title_line(text):
     right_spaces = (num_spaces - len(left_spaces)) * SPACE
     title = DIV + left_spaces + text + right_spaces + DIV
     return title
+
+
+def get_week_empty_row():
+    """Gets an empty row for a calendar week. Produces a divider for
+    each day and the requisite number of spaces between each to create
+    a week of days that are of size DAY_SQUARE_WIDTH.
+    
+    Example:
+    |          |          |          |          |          |
+    """
+    week_empty_row = ""
+    for i in range(DAYS_PER_ROW):
+        week_empty_row += DIV + (SPACE * DAY_SQUARE_WIDTH)
+    week_empty_row += DIV
+    return week_empty_row
 
 
 def fmt_year_title_str(year):
@@ -202,8 +202,18 @@ def fmt_week_days_line(day_start, day_end):
     return week_days_line
 
 
-def fmt_week_progress_line(day_start, day_end, year):
-    pass
+def fmt_week_progress_stars_line(day_start, day_end, year):
+    week_progress_stars_line = ""
+    day_start_int = int(day_start)
+    day_end_int = int(day_end)
+    for day in range(day_start_int, day_end_int):
+        progress_stars = PROGRESS_DATA[str(year)][str(day)] * STAR
+        left_spaces = (((DAY_SQUARE_WIDTH - (len(progress_stars))) // 2)) * SPACE
+        right_spaces = (DAY_SQUARE_WIDTH - (len(left_spaces) + len(progress_stars))) * SPACE
+        day_progress_stars = DIV + left_spaces + progress_stars + right_spaces
+        week_progress_stars_line += day_progress_stars
+    week_progress_stars_line += DIV
+    return week_progress_stars_line
 
 
 # --------------------- BANNERS ---------------------------------------
@@ -257,7 +267,9 @@ def get_year_banner(year):
     """Example:
     +======================================================+
     |                                                      |
+    |                                                      |
     |                     [ 2 0 2 5 ]                      |
+    |                                                      |
     |                                                      |
     +======================================================+"""
     border_bold = get_border(bold=True)
@@ -266,7 +278,9 @@ def get_year_banner(year):
     year_banner_rows = [
         border_bold,
         empty_row,
+        empty_row,
         year_title,
+        empty_row,
         empty_row,
         border_bold,
     ]
@@ -281,6 +295,7 @@ def get_progress_bar(stars_earned, total_stars):
     |                                                      |
     | [ % PROGRESS BAR % ] :  37 / 50           [ 97.8 % ] |
     | [***********************************...............] |
+    |                                                      |
     |______________________________________________________|"""
 
     percent_complete = (stars_earned / total_stars) * 100
@@ -308,6 +323,7 @@ def get_progress_bar(stars_earned, total_stars):
         empty_row,
         pb_line_1,
         pb_line_2,
+        empty_row,
         underline
     ]
 
@@ -319,12 +335,24 @@ def get_progress_bar(stars_earned, total_stars):
 def get_calendar_week(year, day_start, day_end, PROGRESS_DATA):
     week_border = get_week_border()
     week_empty_row = get_week_empty_row()
-
-    day_line = ""
-    empty_line = ""
+    week_days_line = fmt_week_days_line(day_start=day_start, 
+                                        day_end=day_end)
+    week_progress_stars_line = fmt_week_progress_stars_line(day_start=day_start,
+                                                       day_end=day_end)    
+    calendar_week_lines = [
+        week_border,
+        week_days_line,
+        week_empty_row,
+        week_progress_stars_line,
+    ]
+    calendar_week_row = "\n".join(calendar_week_lines)
+    return calendar_week_row
 
 
 def get_calendar(year):
+    year_title_banner = get_year_banner(year)
+
+    year_progress_bar = get_progress_bar()
     week_border = get_week_border()
     pass
 
@@ -334,7 +362,7 @@ def get_calendar(year):
 if __name__ == "__main__":
 
     total_stars = get_total_puzzles_all()
-    stars_earned = get_total_puzzles_completed()
+    stars_earned = get_total_stars_earned()
     title_banner = get_title_banner()
     progress_bar = get_progress_bar(stars_earned, total_stars)
     print(title_banner)
@@ -343,7 +371,7 @@ if __name__ == "__main__":
 
     for year in PROGRESS_DATA.keys():
         total_stars = get_total_puzzles_year(year)
-        stars_earned = get_puzzles_completed_year(year)
+        stars_earned = get_stars_earned_year(year)
         year_banner = get_year_banner(year)
         progress_bar = get_progress_bar(stars_earned, total_stars)        
         print(year_banner)
