@@ -23,22 +23,7 @@ def get_total_stars_earned():
     """Returns the sum total of stars earned for all Advent of Code
     events."""
     total_completed_puzzles = sum(score for _, days in PROGRESS_DATA.items()
-                              for _, score in days.items())
-    return total_completed_puzzles
-
-
-def get_total_puzzles_year(year):
-    """Returns the total number of stars that can be earned for this
-    year's Advent of Code event."""
-
-    total_puzzles = sum(2 for _ in PROGRESS_DATA[year].keys())
-    return total_puzzles
-
-
-def get_stars_earned_year(year):
-    """Returns the total number of stars that have been earned for this
-    year's Advent of Code event."""
-    total_completed_puzzles = sum(score for _, score in PROGRESS_DATA[year].items())
+                            for _, score in days.items())
     return total_completed_puzzles
 
 
@@ -88,19 +73,6 @@ def get_border(bold=False):
     return border
 
 
-def get_week_border():
-    """Gets a horizontal border of dashes that also has CORNER chars to
-    delimit each day square.
-    
-    Example:
-    
-    +----------+----------+----------+----------+----------+
-    """
-    day_border = CORNER + (DASH * DAY_SQUARE_WIDTH)
-    week_border = (day_border * DAYS_PER_ROW) + DIV
-    return week_border
-
-
 def get_empty_row():
     """Gets an empty row for the entire calendar with. Produces a line
     of blank spaces with a DIV char on the left and right.
@@ -142,78 +114,6 @@ def fmt_title_line(text):
     right_spaces = (num_spaces - len(left_spaces)) * SPACE
     title = DIV + left_spaces + text + right_spaces + DIV
     return title
-
-
-def get_week_empty_row():
-    """Gets an empty row for a calendar week. Produces a divider for
-    each day and the requisite number of spaces between each to create
-    a week of days that are of size DAY_SQUARE_WIDTH.
-    
-    Example:
-    |          |          |          |          |          |
-    """
-    week_empty_row = ""
-    for i in range(DAYS_PER_ROW):
-        week_empty_row += DIV + (SPACE * DAY_SQUARE_WIDTH)
-    week_empty_row += DIV
-    return week_empty_row
-
-
-def fmt_year_title_str(year):
-    """Formats a year title line for a calendar year banner.
-    First, formats a year title string like so:
-        year_str = [ 2 0 2 5 ]
-    Next, calls the fmt_title_line() function passing year_str as the
-    only argument. Produces a centered, formatted year title line with
-    a width of CALENDAR_WIDTH and beginning and ending with DIV
-    characters.
-    
-    Example:
-    |                     [ 2 0 2 3 ]                      |
-    """
-    year_str = list(str(year))
-    fmt_year = "[ " + " ".join(year_str) + " ]"
-    year_title_line = fmt_title_line(fmt_year)
-    return year_title_line
-
-
-def fmt_week_days_line(day_start, day_end):
-    """Shows the day number line for a calendar week row.
-    When preceded with a calednar week row border and followed by a
-    blank row or a progress star line and closed with another week row
-    border, forms an entire ASCII calendar week.
-
-    Example:
-    
-    |    1     |    2     |    3     |    4     |    5     |
-    
-    """
-    week_days_line = ""
-    for day in range(day_start, day_end+1):
-        day = str(day)
-        num_day_square_spaces = DAY_SQUARE_WIDTH - len(day)
-        num_day_square_spaces_left = num_day_square_spaces // 2
-        num_day_square_spaces_right = num_day_square_spaces - num_day_square_spaces_left
-        spaces_left = SPACE * num_day_square_spaces_left
-        spaces_right = SPACE * num_day_square_spaces_right
-        day_square = DIV + spaces_left + day + spaces_right
-        week_days_line += day_square
-    week_days_line += DIV
-    return week_days_line
-
-
-def fmt_week_progress_stars_line(day_start, day_end, year):
-    week_progress_stars_line = ""
-    day_start_int = int(day_start)
-    day_end_int = int(day_end)
-    for day in range(day_start_int, day_end_int):
-        progress_stars = PROGRESS_DATA[str(year)][str(day)] * STAR
-        left_spaces = (((DAY_SQUARE_WIDTH - (len(progress_stars))) // 2)) * SPACE
-        right_spaces = (DAY_SQUARE_WIDTH - (len(left_spaces) + len(progress_stars))) * SPACE
-        day_progress_stars = DIV + left_spaces + progress_stars + right_spaces
-        week_progress_stars_line += day_progress_stars
-    week_progress_stars_line += DIV
-    return week_progress_stars_line
 
 
 # --------------------- BANNERS ---------------------------------------
@@ -272,6 +172,25 @@ def get_year_banner(year):
     |                                                      |
     |                                                      |
     +======================================================+"""
+    
+    def fmt_year_title_str(year):
+        """Formats a year title line for a calendar year banner.
+        First, formats a year title string like so:
+            year_str = [ 2 0 2 5 ]
+        Next, calls the fmt_title_line() function passing year_str as the
+        only argument. Produces a centered, formatted year title line with
+        a width of CALENDAR_WIDTH and beginning and ending with DIV
+        characters.
+        
+        Example:
+        |                     [ 2 0 2 3 ]                      |
+        """
+        year_str = list(str(year))
+        fmt_year = "[ " + " ".join(year_str) + " ]"
+        year_title_line = fmt_title_line(fmt_year)
+        return year_title_line
+
+
     border_bold = get_border(bold=True)
     empty_row = get_empty_row()
     year_title = fmt_year_title_str(year)
@@ -286,7 +205,7 @@ def get_year_banner(year):
     ]
     year_banner = "\n".join(year_banner_rows)
     return year_banner
-    
+
 
 # ----------------- PROGRESS BAR --------------------------------------
 def get_progress_bar(stars_earned, total_stars):
@@ -312,11 +231,9 @@ def get_progress_bar(stars_earned, total_stars):
     pb_line_1 = pb_line_1_left + pb_line_1_spaces + pb_line_1_right
     pb_line_2 = "| [" + stars_progress_bar + dots_progress_bar + "] |"
 
-    border = get_border()
+    border = get_border(bold=False)
     empty_row = get_empty_row()
     # last row of banner; lower border of progress bar. see docstring.
-    underline = get_underline(SPACE * (CALENDAR_WIDTH-2))
-    underline = DIV + underline + DIV
 
     progress_bar_rows = [
         border,
@@ -324,7 +241,7 @@ def get_progress_bar(stars_earned, total_stars):
         pb_line_1,
         pb_line_2,
         empty_row,
-        underline
+        border,
     ]
 
     progress_bar = "\n".join(progress_bar_rows)
@@ -332,31 +249,140 @@ def get_progress_bar(stars_earned, total_stars):
 
 
 # ----------------- CALENDAR WEEKS ------------------------------------
-def get_calendar_week(year, day_start, day_end, PROGRESS_DATA):
-    week_border = get_week_border()
-    week_empty_row = get_week_empty_row()
-    week_days_line = fmt_week_days_line(day_start=day_start, 
-                                        day_end=day_end)
-    week_progress_stars_line = fmt_week_progress_stars_line(day_start=day_start,
-                                                       day_end=day_end)    
-    calendar_week_lines = [
-        week_border,
-        week_days_line,
-        week_empty_row,
-        week_progress_stars_line,
-    ]
-    calendar_week_row = "\n".join(calendar_week_lines)
-    return calendar_week_row
 
 
 def get_calendar(year):
+
+
+    def get_total_puzzles_year(year):
+        """Returns the total number of stars that can be earned for this
+        year's Advent of Code event."""
+
+        total_puzzles = sum(2 for _ in PROGRESS_DATA[year].keys())
+        return total_puzzles
+
+
+    def get_stars_earned_year(year):
+        """Returns the total number of stars that have been earned for this
+        year's Advent of Code event."""
+        total_completed_puzzles = sum(score for _, score in PROGRESS_DATA[year].items())
+        return total_completed_puzzles
+
+
+    def get_week_border():
+        """Gets a horizontal border of dashes that also has CORNER chars to
+        delimit each day square.
+        
+        Example:
+        
+        +----------+----------+----------+----------+----------+
+        """
+        day_border = CORNER + (DASH * DAY_SQUARE_WIDTH)
+        week_border = (day_border * DAYS_PER_ROW) + DIV
+        return week_border
+
+
+    def get_week_empty_row():
+        """Gets an empty row for a calendar week. Produces a divider for
+        each day and the requisite number of spaces between each to create
+        a week of days that are of size DAY_SQUARE_WIDTH.
+        
+        Example:
+        |          |          |          |          |          |
+        """
+        week_empty_row = ""
+        for i in range(DAYS_PER_ROW):
+            week_empty_row += DIV + (SPACE * DAY_SQUARE_WIDTH)
+        week_empty_row += DIV
+        return week_empty_row
+
+
+    def fmt_week_stars_line(day_start, day_end, year):
+        week_progress_stars_line = ""
+        day_start_int = int(day_start)
+        day_end_int = int(day_end)
+        for day in range(day_start_int, day_end_int+1):
+            if str(day) not in PROGRESS_DATA[str(year)]:
+                progress_stars = "  "
+            else:
+                progress_stars = PROGRESS_DATA[str(year)][str(day)] * STAR
+            left_spaces = (((DAY_SQUARE_WIDTH - (len(progress_stars))) // 2)) * SPACE
+            right_spaces = (DAY_SQUARE_WIDTH - (len(left_spaces) + len(progress_stars))) * SPACE
+            day_progress_stars = DIV + left_spaces + progress_stars + right_spaces
+            week_progress_stars_line += day_progress_stars
+        week_progress_stars_line += DIV
+        return week_progress_stars_line
+
+
+    def fmt_week_days_line(day_start, day_end):
+        """Shows the day number line for a calendar week row.
+        When preceded with a calednar week row border and followed by a
+        blank row or a progress star line and closed with another week row
+        border, forms an entire ASCII calendar week.
+
+        Example:
+        
+        |    1     |    2     |    3     |    4     |    5     |
+        
+        """
+        week_days_line = ""
+        for day in range(day_start, day_end+1):
+            day = str(day)
+            num_day_square_spaces = DAY_SQUARE_WIDTH - len(day)
+            num_day_square_spaces_left = num_day_square_spaces // 2
+            num_day_square_spaces_right = num_day_square_spaces - num_day_square_spaces_left
+            spaces_left = SPACE * num_day_square_spaces_left
+            spaces_right = SPACE * num_day_square_spaces_right
+            day_square = DIV + spaces_left + day + spaces_right
+            week_days_line += day_square
+        week_days_line += DIV
+        return week_days_line
+
+
+    def get_calendar_week(
+            year,
+            day_start,
+            day_end
+    ):
+        week_border = get_week_border()
+        week_empty_row = get_week_empty_row()
+        week_days_line = fmt_week_days_line(
+            day_start=day_start, 
+            day_end=day_end)
+        week_progress_stars_line = fmt_week_stars_line(
+            day_start=day_start,
+            day_end=day_end,
+            year=year)    
+        calendar_week_lines = [
+            week_border,
+            week_days_line,
+            week_empty_row,
+            week_progress_stars_line,
+        ]
+        calendar_week_row = "\n".join(calendar_week_lines)
+        return calendar_week_row
+
+    total_puzzles_year = get_total_puzzles_year(year)
+    completed_puzzles_year = get_stars_earned_year(year)
+
     year_title_banner = get_year_banner(year)
-
-    year_progress_bar = get_progress_bar()
+    year_progress_bar = get_progress_bar(completed_puzzles_year, total_puzzles_year)
     week_border = get_week_border()
-    pass
 
+    calendar_rows = [
+        year_title_banner,
+        year_progress_bar,
+    ]
 
+    for i in range(1, 26, 5):
+        day_start = i
+        day_end = i + 4
+        week_row = get_calendar_week(year, day_start, day_end)
+        calendar_rows.append(week_row)
+    
+    calendar_rows.append(week_border)
+    return "\n".join(calendar_rows)
+        
 
 # CREATING THE CALENDARS
 if __name__ == "__main__":
@@ -370,13 +396,5 @@ if __name__ == "__main__":
     print("\n\n")
 
     for year in PROGRESS_DATA.keys():
-        total_stars = get_total_puzzles_year(year)
-        stars_earned = get_stars_earned_year(year)
-        year_banner = get_year_banner(year)
-        progress_bar = get_progress_bar(stars_earned, total_stars)        
-        print(year_banner)
-        print(progress_bar)
+        print(get_calendar(year))
         print("\n\n")
-
-    week_days_line = fmt_week_days_line(1, 5)
-    print(week_days_line)
