@@ -11,7 +11,6 @@ def main():
         return vowel_count >= 3
 
     def has_double_char(s):
-        pairs = []
         for i in range(len(s)-1):
             if s[i] == s[i+1]:
                 return True

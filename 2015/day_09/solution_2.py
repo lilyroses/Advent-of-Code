@@ -25,6 +25,7 @@ def main():
 
     cities = set(cities)
     travel_perms = perms(cities)
+    
     for t in travel_perms:
         total_distance = 0
         journey = " ".join(t).split()
