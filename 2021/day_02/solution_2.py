@@ -5,7 +5,23 @@ with open(INPUT_FILE, "r") as f:
 
 
 def main():
-    pass
+    hz_pos = 0
+    depth = 0
+    aim = 0
+    for line in lines:
+        dir, val = line.split()
+        val = int(val)
+        if dir == "forward":
+            hz_pos += val
+            depth += (aim * val) 
+        elif dir == "up":
+            aim -= val
+        elif dir == "down":
+            aim += val
+        else:
+            print(f"Unknown direction '{dir}'")
+    ans = hz_pos * depth
+    print(ans)
 
 
 if __name__ == "__main__":
